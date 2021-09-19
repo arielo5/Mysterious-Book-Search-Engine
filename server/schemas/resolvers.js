@@ -14,7 +14,7 @@ const resolvers = {
     },
 
     Mutation: {
-        deleteBook: async(parent, args, context) => {
+        removeBook: async(parent, args, context) => {
         if (context.user){
             const updateUser = await User.findOneAndUpdate(
                 {_id: context.user.id},
