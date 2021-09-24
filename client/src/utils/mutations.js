@@ -1,14 +1,14 @@
 import { gql } from "graphql-tag";
 
 export const REMOVE_BOOK = gql`
-  mutation removeBook($bookId: String!) {
+  mutation removeBook($bookId: ID!) {
     removeBook(bookId: $bookId) {
       _id
       username
       email
       bookCount
-      saveBooks {
-        author
+      savedBooks {
+        authors
         description
         bookId
         link
@@ -26,8 +26,8 @@ export const SAVE_BOOK = gql`
       username
       email
       bookCount
-      saveBooks {
-        author
+      savedBooks {
+        authors
         description
         bookId
         link
@@ -47,8 +47,8 @@ export const ADD_USER = gql`
         username
         email
         bookCount
-        saveBooks {
-          author
+        savedBooks {
+          authors
           description
           bookId
           link
@@ -68,8 +68,8 @@ export const LOGIN = gql`
         _id
         username
         bookCount
-        saveBooks {
-          author
+        savedBooks {
+          authors
           description
           bookId
           link

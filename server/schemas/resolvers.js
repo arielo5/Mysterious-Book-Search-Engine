@@ -18,30 +18,33 @@ const resolvers = {
   Mutation: {
     removeBook: async (parent, args, context) => {
       if (context.user) {
-        const updateUser = await User.findOneAndUpdate(
-          { _id: context.user.id },
-          { $pull: { savedBook: { bookId: args.bookId } } },
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedBooks: { bookId: args.bookId } } },
           { new: true }
         );
-        return updateUser;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
 
     saveBook: async (parent, { input }, context) => {
+      console.log("Oh hey", input);
       if (context.user) {
-        const updateUser = await User.findOneAndUpdate(
-          { _id: context.user.id },
-          { $addToSet: { savedBook: input } },
+        const updateUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { savedBooks: input } },
           { new: true }
         );
+        console.log("updated user????????", updateUser);
         return updateUser;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
 
     addUser: async (parent, args) => {
+      console.log("Creating!", args);
       const user = await User.create(args);
+      console.log("Created!", user);
       const token = await signToken(user);
 
       return { token, user };
